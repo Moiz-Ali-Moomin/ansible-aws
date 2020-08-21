@@ -1,0 +1,22 @@
+--- 
+- 
+  hosts: all
+  name: "Setup httpd webserver on ec2 aws"
+  tasks: 
+    - 
+      name: "Install HTTPD"
+      package: 
+        name: 
+          - "httpd"
+        state: present
+    - 
+      name: "service HTTPD start"
+      service: 
+        enabled: yes
+        name: "httpd"
+        state: started
+    -
+      name: "Copy html file"
+      copy:
+        src: index.html
+        dest: var/www/html	

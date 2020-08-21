@@ -1,0 +1,29 @@
+--- 
+- 
+  hosts: "127.0.0.1"
+  name: "Setting Up Web server on ec2 aws"
+  tasks: 
+    - 
+      ec2: 
+        assign_public_ip: true
+        aws_access_key: "{{ accesskey }}"
+        aws_secret_key: "{{ secretkey  }}"
+        count: 1
+        group_id: sg-0149eb2836b76d086
+        image: ami-0cd31be676780afa7
+        instance_type: t2.micro
+        key_name: key5253
+        region: ap-southeast-1
+        state: present
+        vpc_subnet_id: subnet-929116cb
+        wait: true
+      name: "ec2 configuration"
+      register: ipa
+    - 
+      copy: 
+        content: "{{ ipa.instances[0].public_ip  }}"
+        dest: /home/ec2/ansible-host.txt
+      name: "Get IP of ec2 aws"
+  vars_files: 
+    - access1.yml
+
